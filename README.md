@@ -1,4 +1,3 @@
 # datainference
 
-Inspired by a client project
-work in progress
+Inspired by a client project (work in progress)
