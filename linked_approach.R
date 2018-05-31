@@ -6,7 +6,7 @@ require(stringr)
 get_wikidata_id <- function(item){
   query <- paste0('SELECT ?item ?itemLabel WHERE { ?item ?itemLabel "', item, '"@en.}' )
   returned_res <- SPARQL(endpoint,query)$results
-  item_numbers <- str_extract(returned_res$item,"\\(?[0-9]+\\)?")
+  item_numbers <- str_extract(returned_res$item,"Q[0-9]+")
   item_id <- item_numbers[!is.na(item_numbers)]
   return(item_id)
 }
@@ -37,7 +37,7 @@ item_id <- get_wikidata_id(item = item)
 
 # get parent objects by looking for all 'instance of' triplets ('instance_of' has Id P31)
 # this will display Ids and labels of the parents the item is pointing to
-instance_of_id <- determine_parent_instances(item_id)
+instance_of_id <- lapply(item_id, determine_parent_instances)
 
 # ...
 
