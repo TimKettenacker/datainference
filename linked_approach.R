@@ -1,6 +1,7 @@
 # define packages
 require(SPARQL)
 require(stringr)
+require(rvest)
 
 # define functions
 get_wikidata_id <- function(item){
@@ -20,9 +21,7 @@ determine_connected_nodes <- function(item_id, edge_id){
   return(returned_res)
 }
 
-# step 1: extract entities from text
-# to-do: revise previous code and adjust when applicable
-# ...
+# step 1: extract entities from web sources
 
 item <- "MongoDB"
 
@@ -39,16 +38,19 @@ item_id <- get_wikidata_id(item = item)
 # and pass to function which adds the ids and labels of the nodes the item is pointing to
 edge_ids <- list(instance_of=c("P31"), subclass_of=c("P279"), part_of=c("P361"))
 parentObj_df <- data.frame()
+
 for(i in 1:length(edge_ids)){
   tryCatch({
     resultset <- determine_connected_nodes(item_id = item_id, edge_id = edge_ids[[i]])
     resultset$Relationship <- names(edge_ids[i])
-    parentObj_df <- rbind(parentObj_df, resultset)
-    print(parentObj_df)},
+    parentObj_df <- rbind(parentObj_df, resultset)},
     error=function(e){cat("ERROR :",conditionMessage(e), "\n")}
   )
 }
 
+parentObj_df$parentObjLabel <- str_replace_all(parentObj_df$parentObjLabel, "@en", "")
+
 # ...
 
-# step 3: check how one can traverse the information, maybe build a graph, check suitability 
+# step 3: check how one can traverse the information, maybe visualize graphs in Neo4j?
+# compare closeness of input graph1 (all skills of someone) vs input graph2 (job offer/project desc)?
