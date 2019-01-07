@@ -1,4 +1,8 @@
-# datainference
+# datainference v1.0
+
+UPDATE 2019-01-07: This repository merely contains a rough simulation of the functionality in R, and is missing a concise example for a use case (the main reason is lacking ability to access data free of cost on linkedIn or xing) to illustrate the advantages of the setup.
+
+===============================================================================
 
 I came across this idea during my consulting work for a client. The client project was dedicated to make all meta(data) within the enterprise findable, accessible and interoperable, and soon dedicated resources were provided, equipped with a bag of approaches to make this vision work. Among them was the use of ontologies to link representative findings discovered by data scientists.  
 
